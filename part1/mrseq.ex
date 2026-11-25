@@ -8,9 +8,8 @@ defmodule MRSeq do
   end
 
   def reduce_phase(intermediate, reducef) do
-    # output for the word count reducer
-    [{"a", "3"}, {"b", "1"}]
-
+  intermediate |> Enum.group_by(fn {k, _v} -> k end, fn {_k, v} -> v end) |> Enum.sort_by(fn {k, _values} -> k end)
+  |> Enum.map(fn {k, values} -> {k, reducef.(k, values)} end)
   end
 
   def run_mr_job(prog, input_dir) do
