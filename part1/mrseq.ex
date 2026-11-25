@@ -1,14 +1,10 @@
 defmodule MRSeq do
 
+  # [{"to", "1"}, {"be", "1"}, {"or", "1"}, {"not", "1"}, {"to", "1"}, {"be", "1"}
   def map_phase(files, mapf) do
-
-    # input: ["f1", "f2"] with
-    # f1: "a b"
-    # f2: "a"
-
-    # intermediate output for the word count mapper
-    [{"a", "1"}, {"b", "1"}, {"a", "2"}]
-
+    Enum.flat_map(files, fn file -> mapf.(file, File.read!(file))
+    end
+    )
   end
 
   def reduce_phase(intermediate, reducef) do
